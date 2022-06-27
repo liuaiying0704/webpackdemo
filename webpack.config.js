@@ -66,6 +66,45 @@ module.exports = {
         // style-loader 在把css代码插入到 dom中
         use: ['style-loader', 'css-loader', 'less-loader'],
       },
+
+      // 加载器 - 图片问题   yarn add url-loader file-loader -D
+      {
+        test: /\.(png|jpg|gif|jpeg)$/i,
+        use: [
+          {
+            loader: 'url-loader', // 匹配文件, 尝试转base64字符串打包到js中
+            // 配置limit, 超过8k, 不转, file-loader复制, 随机名, 输出文件
+            options: {
+              limit: 8 * 1024,
+            },
+          },
+        ],
+      },
+      // // wepack 5语法
+      {
+        test: /\.(png|jpg|gif|jpeg)$/i,
+        // type: 'asset/inline',
+        // // 直接转换成base64
+        // type: 'asset/resource',
+        // // 复制到dist目录下
+        type: 'asset',
+        parser: {
+          //解析器
+          dataUrlCondition: {
+            // maxSize: 30 * 1024,
+            maxSize: 8 * 1024,
+          },
+        },
+        // 小于8kb，转based64打包在js下
+        // 大于8Kb,直接复制到dist文件下。
+        // 可修改文件名
+        generator: {
+          //生成器
+          // filename: 'font-[name].[hash:6][ext]',   ext扩展名
+          filename: '[hash:6][ext]',
+          //资源文件处理后， zi'yuan'guan'li'qi输出的文件名
+        },
+      },
     ],
   },
 };
