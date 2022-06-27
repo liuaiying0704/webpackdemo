@@ -105,6 +105,66 @@ module.exports = {
           //资源文件处理后， zi'yuan'guan'li'qi输出的文件名
         },
       },
+      //  // wepack 5语法
+      {
+        test: /\.(png|jpg|gif|jpeg)$/i,
+        // type: 'asset/inline',
+        // // 直接转换成base64
+        // type: 'asset/resource',
+        // // 复制到dist目录下
+        type: 'asset',
+        parser: {
+          //解析器
+          dataUrlCondition: {
+            // maxSize: 30 * 1024,
+            maxSize: 8 * 1024,
+          },
+        },
+        // 小于8kb，转based64打包在js下
+        // 大于8Kb,直接复制到dist文件下。
+        // 可修改文件名
+        generator: {
+          //生成器
+          // filename: 'font-[name].[hash:6][ext]',   ext扩展名
+          filename: '[hash:6][ext]',
+          //资源文件处理后， zi'yuan'guan'li'qi输出的文件名
+        },
+      },
+      // 字体图标
+      // webpack5
+      // {
+      //   // webpack5默认内部不认识这些文件, 所以当做静态资源直接输出即可
+      //   test: /\.(eot|svg|ttf|woff|woff2)$/,
+      //   type: 'asset',
+      //   generator: {
+      //     filename: 'font-[name].[hash:6][ext]',
+      //   },
+      //   parser: {
+      //     //解析器
+      //     dataUrlCondition: {
+      //       // maxSize: 30 * 1024,
+      //       maxSize: 8 * 1024,
+      //     },
+      //   },
+      // },
+      // webpack4
+      {
+        // 处理字体图标的解析
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 30 * 1024,
+              // 配置输出的文件名
+              name: '[name].[ext]',
+              // 配置输出的文件目录
+              outputPath: 'fonts/',
+            },
+          },
+        ],
+      },
+      //
     ],
   },
 };
