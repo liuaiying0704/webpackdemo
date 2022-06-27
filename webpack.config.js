@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 // 自动清除
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 // mode模式
+// webpack-dev-server服务器  yarn add webpack-dev-server -D
 module.exports = {
   mode: 'development',
   entry: './src/main.js', // 入口
@@ -29,4 +30,9 @@ module.exports = {
     new CleanWebpackPlugin(), // 删除的是ouput path 里配置的那个输出文件的文件夹
     // 默认情况下dist
   ],
+  //   在webpack.config.js中添加服务器配置
+  devServer: {
+    port: 3000, // 端口号
+    open: true,
+  },
 };
