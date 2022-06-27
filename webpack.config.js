@@ -7,6 +7,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 // mode模式
 // webpack-dev-server服务器  yarn add webpack-dev-server -D
+
+// css    yarn add style-loader css-loader -D
+// 重复
 module.exports = {
   mode: 'development',
   entry: './src/main.js', // 入口
@@ -32,7 +35,26 @@ module.exports = {
   ],
   //   在webpack.config.js中添加服务器配置
   devServer: {
-    port: 3000, // 端口号
+    // port: 3000, // 端口号
     open: true,
+  },
+  //   加载器 - 处理css文件问题  yarn add style-loader css-loader -D
+  // ...其他代码
+  module: {
+    // loader 加载器 配置在这儿
+    rules: [
+      // loader的规则
+
+      // 加载器 - 处理css文件问题
+      {
+        test: /\.css$/, // 匹配所有的css文件
+        // loader 执行的顺序： use数组里从右向左运行
+        // 先用 css-loader 让webpack能够识别 css 文件的内容并打包
+        // 再用 style-loader 将样式, 把css插入到dom中
+        use: ['style-loader', 'css-loader'],
+      },
+
+      // 处理less，loader的规则
+    ],
   },
 };
