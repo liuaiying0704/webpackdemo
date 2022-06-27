@@ -68,18 +68,19 @@ module.exports = {
       },
 
       // 加载器 - 图片问题   yarn add url-loader file-loader -D
-      {
-        test: /\.(png|jpg|gif|jpeg)$/i,
-        use: [
-          {
-            loader: 'url-loader', // 匹配文件, 尝试转base64字符串打包到js中
-            // 配置limit, 超过8k, 不转, file-loader复制, 随机名, 输出文件
-            options: {
-              limit: 8 * 1024,
-            },
-          },
-        ],
-      },
+      // yarn add -D babel-loader @babel/core @babel/preset-env
+      // {
+      //   test: /\.(png|jpg|gif|jpeg)$/i,
+      //   use: [
+      //     {
+      //       loader: 'url-loader', // 匹配文件, 尝试转base64字符串打包到js中
+      //       // 配置limit, 超过8k, 不转, file-loader复制, 随机名, 输出文件
+      //       options: {
+      //         limit: 8 * 1024,
+      //       },
+      //     },
+      //   ],
+      // },
       // // wepack 5语法
       {
         test: /\.(png|jpg|gif|jpeg)$/i,
@@ -164,7 +165,17 @@ module.exports = {
           },
         ],
       },
-      //
+      // js高级降级处理
+      {
+        test: /\.js$/,
+        exclude: /(node_modules)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'], // 预设:转码规则(用bable开发环境本来预设的)
+          },
+        },
+      },
     ],
   },
 };
